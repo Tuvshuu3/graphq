@@ -65,7 +65,7 @@ const Login = () => {
       await createUser(signupForm);
       setUsername(signupForm.username);
       setPassword(signupForm.password);
-      setSignupMessage("Account created. You can log in now.");
+      setSignupMessage("Account created.");
       setSignupForm(initialSignupForm);
       setIsSignupOpen(false);
     } catch (error) {

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Header, PatientMedicineRow } from "../components";
-import { HomeIcon } from "../assets";
+import { HomeIcon, LogoutIcon } from "../assets";
 import {
   getActiveCourse,
   getNextDoseTime,
@@ -11,14 +11,6 @@ import { createDoseLog, getPatient } from "../api";
 import "../styles/PatientHome.css";
 
 const missed_dose_interval = 30 * 1000;
-
-const LogoutIcon = () => (
-  <svg aria-hidden="true" viewBox="0 0 24 24">
-    <path d="M10 17l5-5-5-5" />
-    <path d="M15 12H3" />
-    <path d="M21 19V5a2 2 0 0 0-2-2h-6" />
-  </svg>
-);
 
 const getLatestCourseDoseLog = (doseLogs = [], courseId) =>
   [...doseLogs]
