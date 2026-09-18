@@ -25,7 +25,7 @@ const getLatestCourseDoseLog = (doseLogs = [], courseId) =>
     .filter((doseLog) => doseLog.courseId === courseId)
     .sort(
       (firstLog, secondLog) =>
-        new Date(secondLog.time) - new Date(firstLog.time)
+        new Date(secondLog.time) - new Date(firstLog.time),
     )[0];
 
 const isSameDay = (firstDate, secondDate) =>
@@ -84,10 +84,10 @@ const PatientHome = () => {
         {
           ...medicine,
           doseLogs: medicine.doseLogs.filter(
-            (doseLog) => doseLog.courseId === activeCourse.courseId
+            (doseLog) => doseLog.courseId === activeCourse.courseId,
           ),
         },
-        currentTime
+        currentTime,
       );
 
       return !nextDoseTime || isSameDay(nextDoseTime, currentTime);
@@ -95,7 +95,7 @@ const PatientHome = () => {
   const sortedMedicines = [...filteredMedicines].sort(
     (firstMedicine, secondMedicine) =>
       Number(isMedicineActive(secondMedicine, currentTime)) -
-      Number(isMedicineActive(firstMedicine, currentTime))
+      Number(isMedicineActive(firstMedicine, currentTime)),
   );
 
   useEffect(() => {
@@ -149,11 +149,11 @@ const PatientHome = () => {
             ...medicine,
             doseLogs: activeCourse
               ? medicine.doseLogs.filter(
-                  (doseLog) => doseLog.courseId === activeCourse.courseId
+                  (doseLog) => doseLog.courseId === activeCourse.courseId,
                 )
               : medicine.doseLogs,
           },
-          previousTime
+          previousTime,
         );
 
         if (!dueTime || !activeCourse) {
@@ -215,8 +215,8 @@ const PatientHome = () => {
         const newMissedDoses = unresolvedMissedDoses.filter(
           (missedDose) =>
             !currentMissedDoses.some(
-              (currentMissedDose) => currentMissedDose.key === missedDose.key
-            )
+              (currentMissedDose) => currentMissedDose.key === missedDose.key,
+            ),
         );
 
         if (newMissedDoses.length === 0) {
@@ -262,12 +262,12 @@ const PatientHome = () => {
               };
             }),
           };
-        })
+        }),
       );
 
       return savedDoseLog;
     },
-    [patientId, patientName]
+    [patientId, patientName],
   );
 
   useEffect(() => {
@@ -289,7 +289,7 @@ const PatientHome = () => {
 
         const latestDoseLog = getLatestCourseDoseLog(
           medicine.doseLogs,
-          activeCourse.courseId
+          activeCourse.courseId,
         );
 
         if (!latestDoseLog || latestDoseLog.status === "missed") {
@@ -298,7 +298,7 @@ const PatientHome = () => {
 
         const dueTime = new Date(
           new Date(latestDoseLog.time).getTime() +
-            medicine.intervalHours * 60 * 60 * 1000
+            medicine.intervalHours * 60 * 60 * 1000,
         );
         const deadline = new Date(dueTime.getTime() + missed_dose_interval);
 
@@ -334,7 +334,7 @@ const PatientHome = () => {
         setMissedDoses((currentMissedDoses) => {
           if (
             currentMissedDoses.some(
-              (currentMissedDose) => currentMissedDose.key === overdueDose.key
+              (currentMissedDose) => currentMissedDose.key === overdueDose.key,
             )
           ) {
             return currentMissedDoses;
@@ -375,8 +375,8 @@ const PatientHome = () => {
     });
     setMissedDoses((currentMissedDoses) =>
       currentMissedDoses.filter(
-        (currentMissedDose) => currentMissedDose.key !== missedDose.key
-      )
+        (currentMissedDose) => currentMissedDose.key !== missedDose.key,
+      ),
     );
   };
 
@@ -396,7 +396,7 @@ const PatientHome = () => {
       setMissedDoses((currentMissedDoses) => {
         if (
           currentMissedDoses.some(
-            (currentMissedDose) => currentMissedDose.key === missedAlert.key
+            (currentMissedDose) => currentMissedDose.key === missedAlert.key,
           )
         ) {
           return currentMissedDoses;
@@ -493,7 +493,8 @@ const PatientHome = () => {
       {activeAlert && (
         <div className="dose-alert-backdrop">
           <div className="dose-alert">
-            <h2>{activeAlert.medicineName}'s time is up</h2>
+            <h2>Take Your {activeAlert.medicineName}</h2>
+            <p></p>
             <button type="button" onClick={handleTaken}>
               Taken
             </button>
